@@ -70,21 +70,21 @@ def preprocess_input(input_dict: dict, scaler) -> pd.DataFrame:
 def main():
     st.markdown("""
         <div class="main-header">
-            <h1>📊 Customer Churn Prediction</h1>
+            <h1> Customer Churn Prediction</h1>
         </div>
     """, unsafe_allow_html=True)
 
     try:
         model, scaler = load_model_and_scaler()
     except FileNotFoundError:
-        st.error("⚠️ Model or scaler files not found")
+        st.error(" Model or scaler files not found")
         return
     except Exception as e:
-        st.error(f"⚠️ Error loading model/scaler: {e}")
+        st.error(f"Error loading model/scaler: {e}")
         return
 
     #Customer Info
-    st.markdown('<div class="section-title">👤 Customer Information</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"> Customer Information</div>', unsafe_allow_html=True)
     
     col1, col2, col3 = st.columns(3)
     with col1:
@@ -108,30 +108,30 @@ def main():
         Dependents = st.selectbox('Has Dependents', ["Yes", "No"], help="Does customer have dependents?")
 
     #service
-    st.markdown('<div class="section-title">📡 Service Details</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"> Service Details</div>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
-        st.markdown("##### 📞 Phone Services")
+        st.markdown("#####  Phone Services")
         PhoneService = st.selectbox('Phone Service', ["Yes", "No"], key="phone")
         MultipleLines = st.selectbox('Multiple Lines', ["Yes", "No", "No phone service"], key="lines")
         
-        st.markdown("##### 🌐 Internet Services")
+        st.markdown("#####  Internet Services")
         InternetService = st.selectbox('Internet Service Type', ["DSL", "Fiber optic", "No"], key="internet")
         OnlineSecurity = st.selectbox('Online Security', ["Yes", "No", "No internet service"], key="security")
         OnlineBackup = st.selectbox('Online Backup', ["Yes", "No", "No internet service"], key="backup")
     
     with col2:
-        st.markdown("##### 🛡️ Additional Services")
+        st.markdown("#####  Additional Services")
         DeviceProtection = st.selectbox('Device Protection', ["Yes", "No", "No internet service"], key="device")
         TechSupport = st.selectbox('Tech Support', ["Yes", "No", "No internet service"], key="tech")
         
-        st.markdown("##### 📺 Streaming Services")
+        st.markdown("#####  Streaming Services")
         StreamingTV = st.selectbox('Streaming TV', ["Yes", "No", "No internet service"], key="tv")
         StreamingMovies = st.selectbox('Streaming Movies', ["Yes", "No", "No internet service"], key="movies")
 
     # Billing
-    st.markdown('<div class="section-title">💳 Billing Information</div>', unsafe_allow_html=True)
+    st.markdown('<div class="section-title"> Billing Information</div>', unsafe_allow_html=True)
     
     col1, col2 = st.columns(2)
     with col1:
@@ -188,9 +188,9 @@ def main():
     }
 
     #pred button
-    if st.button('🔮 Predict Churn Probability'):
+    if st.button(' Predict Churn Probability'):
         try:
-            with st.spinner('🔄 Analyzing customer data...'):
+            with st.spinner(' Analyzing customer data...'):
                 processed = preprocess_input(user_input, scaler)
                 pred = model.predict(processed)[0]
                 prob = model.predict_proba(processed)[0][1]
@@ -199,7 +199,7 @@ def main():
             if pred == 1:
                 st.markdown(f"""
                     <div class="prediction-card churn-high">
-                        <h2>⚠️ High Churn Risk</h2>
+                        <h2> High Churn Risk</h2>
                         <div class="probability">{prob:.1%}</div>
                         <p style="font-size: 1.2rem; font-weight: 500;">This customer is likely to churn. Immediate action recommended!</p>
                     </div>
@@ -207,7 +207,7 @@ def main():
             else:
                 st.markdown(f"""
                     <div class="prediction-card churn-low">
-                        <h2>✅ Low Churn Risk</h2>
+                        <h2> Low Churn Risk</h2>
                         <div class="probability">{prob:.1%}</div>
                         <p style="font-size: 1.2rem; font-weight: 500;">This customer is likely to stay. Keep up the great service!</p>
                     </div>
@@ -215,28 +215,28 @@ def main():
 
             # visualization
             st.markdown("---")
-            st.markdown("### 📊 Detailed Analysis")
+            st.markdown("###  Detailed Analysis")
             st.progress(prob, text=f"Churn Probability: {prob:.1%}")
             
             col1, col2, col3 = st.columns(3)
             with col1:
-                st.metric("📉 Churn Risk", 
+                st.metric(" Churn Risk", 
                          f"{prob:.1%}", 
                          delta=f"{prob - 0.5:.1%}" if prob > 0.5 else f"{0.5 - prob:.1%}",
                          delta_color="inverse")
             with col2:
-                risk_level = "🔴 High" if prob > 0.7 else "🟡 Medium" if prob > 0.3 else "🟢 Low"
-                st.metric("⚡ Risk Level", risk_level)
+                risk_level = " High" if prob > 0.7 else " Medium" if prob > 0.3 else " Low"
+                st.metric(" Risk Level", risk_level)
             with col3:
                 confidence = max(prob, 1-prob)
-                st.metric("🎯 Confidence", f"{confidence:.1%}")
+                st.metric(" Confidence", f"{confidence:.1%}")
 
             # Recommendations
             if pred == 1:
                 st.markdown("---")
                 st.markdown("""
                     <div class="info-box">
-                        <strong>💡 Recommended Retention Actions:</strong>
+                        <strong> Recommended Retention Actions:</strong>
                         <ul>
                             <li><strong>Immediate Outreach:</strong> Contact customer within 24-48 hours</li>
                             <li><strong>Personalized Offers:</strong> Provide targeted discounts or upgrade incentives</li>
@@ -250,7 +250,7 @@ def main():
                 st.markdown("---")
                 st.markdown("""
                     <div class="info-box">
-                        <strong>💡 Customer Retention Tips:</strong>
+                        <strong> Customer Retention Tips:</strong>
                         <ul>
                             <li><strong>Maintain Quality:</strong> Continue providing excellent service</li>
                             <li><strong>Engagement:</strong> Send periodic satisfaction surveys</li>
@@ -261,14 +261,14 @@ def main():
                 """, unsafe_allow_html=True)
 
         except Exception as e:
-            st.error(f"❌ Error during prediction: {str(e)}")
-            st.info("ℹ️ Please check that all inputs are valid and try again.")
+            st.error(f" Error during prediction: {str(e)}")
+            st.info("ℹ Please check that all inputs are valid and try again.")
             st.exception(e)
 
     # Footer
     st.markdown("""
         <div class="footer">
-            Built with ❤️ using Streamlit<br>
+            Built with using Streamlit<br>
             <small>© 2025 Customer Analytics Platform</small>
         </div>
     """, unsafe_allow_html=True)
